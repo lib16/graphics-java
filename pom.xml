@@ -4,7 +4,7 @@
 	<artifactId>graphics</artifactId>
 	<version>1.0</version>
 	<name>lib16 Graphics</name>
-	<description>lib16 Graphics ...</description>
+	<description>Lib16 Graphics ...</description>
 	<url>http://lib16.com</url>
 	<licenses>
 		<license>
@@ -40,12 +40,6 @@
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
 			<version>6.9.10</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<version>3.4</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
