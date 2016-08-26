@@ -2,6 +2,7 @@
 <suite name="Suite" verbose="1" >
 	<test name="Unit">
 		<packages>
+			<package name="com.lib16.java.graphics.colors"/>
 			<package name="com.lib16.java.graphics.geometry"/>
 			<package name="com.lib16.java.graphics.geometry.pathcommands"/>
 		</packages>
