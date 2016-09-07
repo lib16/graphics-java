@@ -1,6 +1,6 @@
 package com.lib16.java.graphics.geometry;
 
-import java.text.NumberFormat;
+import com.lib16.java.utils.NumberFormatter;
 
 public class Angle
 {
@@ -80,8 +80,8 @@ public class Angle
 		return tan;
 	}
 
-	public String toSvg(NumberFormat numberFormat)
+	public String toSvg(NumberFormatter formatter)
 	{
-		return numberFormat.format(getDegrees());
+		return formatter.format(getDegrees());
 	}
 }

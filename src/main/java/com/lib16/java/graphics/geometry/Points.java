@@ -27,6 +27,26 @@ public class Points
 		return points;
 	}
 
+	public static final double STAR_RADIUS_5_2 = innerRadiusStar(5, 2);
+	public static final double STAR_RADIUS_6_2 = innerRadiusStar(6, 2);
+	public static final double STAR_RADIUS_7_2 = innerRadiusStar(7, 2);
+	public static final double STAR_RADIUS_7_3 = innerRadiusStar(7, 3);
+	public static final double STAR_RADIUS_8_2 = innerRadiusStar(8, 2);
+	public static final double STAR_RADIUS_8_3 = innerRadiusStar(8, 3);
+
+	/**
+	 * Calculates the inner radius of a star polygon.
+	 *
+	 * Assumes that circumradius is 1.
+	 *
+	 * @param  n  Number of corners.
+	 * @param  m  2 <= m < n/2
+	 */
+	public static double innerRadiusStar(int n, int m)
+	{
+		return Math.cos(Math.PI * m / n) / Math.cos(Math.PI * (m - 1) / n);
+	}
+
 	public static Point[] star(Point center, int n, double... radii)
 	{
 		Point[] points = new Point[n * radii.length];
@@ -59,5 +79,116 @@ public class Points
 		points[2] = center.copy().translateX(innerRadius).rotate(center, stop);
 		points[3] = center.copy().translateX(innerRadius).rotate(center, start);
 		return points;
+	}
+
+	public static void rotate(Point center, Angle angle, Point[]... points)
+	{
+		for (Point[] pointArray: points) {
+			for (Point point: pointArray) {
+				point.rotate(center, angle);
+			}
+		}
+	}
+
+	public static void rotate(Angle angle, Point[]...points)
+	{
+		rotate(Point.ORIGIN, angle, points);
+	}
+
+	public static void scale(Point center, double factor, Point[]... points)
+	{
+		for (Point[] pointArray: points) {
+			for (Point point: pointArray) {
+				point.scale(center, factor);
+			}
+		}
+	}
+
+	public static void scale(double factor, Point[]... points)
+	{
+		scale(Point.ORIGIN, factor, points);
+	}
+
+	public static void scaleX(Point center, double factor, Point[]... points)
+	{
+		for (Point[] pointArray: points) {
+			for (Point point: pointArray) {
+				point.scaleX(center, factor);
+			}
+		}
+	}
+
+	public static void scaleX(double factor, Point[]... points)
+	{
+		scaleX(Point.ORIGIN, factor, points);
+	}
+
+	public static void scaleY(Point center, double factor, Point[]... points)
+	{
+		for (Point[] pointArray: points) {
+			for (Point point: pointArray) {
+				point.scaleY(center, factor);
+			}
+		}
+	}
+
+	public static void scaleY(double factor, Point[]... points)
+	{
+		scaleY(Point.ORIGIN, factor, points);
+	}
+
+	public static void skewX(Point center, Angle angle, Point[]... points)
+	{
+		for (Point[] pointArray: points) {
+			for (Point point: pointArray) {
+				point.skewX(center, angle);
+			}
+		}
+	}
+
+	public static void skewX(Angle angle, Point[]... points)
+	{
+		skewX(Point.ORIGIN, angle, points);
+	}
+
+	public static void skewY(Point center, Angle angle, Point[]... points)
+	{
+		for (Point[] pointArray: points) {
+			for (Point point: pointArray) {
+				point.skewY(center, angle);
+			}
+		}
+	}
+
+	public static void skewY(Angle angle, Point[]... points)
+	{
+		skewY(Point.ORIGIN, angle, points);
+	}
+
+	public static void translate(double deltaX, double deltaY, Point[]... points)
+	{
+		for (Point[] pointArray: points) {
+			for (Point point: pointArray) {
+				point.translate(deltaX, deltaY);
+			}
+		}
+	}
+
+	public static void translateX(double deltaX, Point[]... points)
+	{
+		for (Point[] pointArray: points) {
+			for (Point point: pointArray) {
+				point.translateX(deltaX);
+			}
+		}
+	}
+
+	public static void translateY(double deltaY, Point[]... points)
+	{
+		for (Point[] pointArray: points) {
+			for (Point point: pointArray) {
+				point.translateY(deltaY);
+			}
+		}
 	}
 }

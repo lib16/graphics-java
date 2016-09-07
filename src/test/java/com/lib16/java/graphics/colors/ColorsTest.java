@@ -87,6 +87,7 @@ public class ColorsTest
 			{210f, 90, new int[] {0, 45, 90}},
 			{240f, 90, new int[] {0, 0, 90}},
 			{270f, 90, new int[] {45, 0, 90}},
+			{280f, 90, new int[] {60, 0, 90}},
 			{300f, 90, new int[] {90, 0, 90}},
 			{330f, 90, new int[] {90, 0, 45}}
 		};

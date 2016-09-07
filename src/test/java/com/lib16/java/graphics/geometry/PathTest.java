@@ -1,19 +1,18 @@
 package com.lib16.java.graphics.geometry;
 
-import java.text.NumberFormat;
-
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import com.lib16.java.utils.NumberFormatWrapper;
+import com.lib16.java.utils.NumberFormatter;
 
 public class PathTest
 {
+	static final NumberFormatter F = NumberFormatter.DEFAULT_FORMATTER;
+
 	@DataProvider (name = "provider")
 	public static Object[][] provider()
 	{
-		NumberFormat nf = new NumberFormatWrapper(4).getNumberFormat();
 		Angle[] angles = new Angle[3];
 		String[] pointR1 = new String[3];
 		String[] pointR2 = new String[3];
@@ -22,10 +21,10 @@ public class PathTest
 			angles[i] = Angle.byDegrees(degrees);
 			pointR1[i] = new Point(
 					angles[i].getCos() * 50 + 10,
-					angles[i].getSin() * 50 + 20).toSvg(nf);
+					angles[i].getSin() * 50 + 20).toSvg(F);
 			pointR2[i] = new Point(
 					angles[i].getCos() * 25 + 10,
-					angles[i].getSin() * 25 + 20).toSvg(nf);
+					angles[i].getSin() * 25 + 20).toSvg(F);
 
 			i++;
 		}
@@ -132,9 +131,6 @@ public class PathTest
 	@Test (dataProvider = "provider")
 	public void test(Path path, String expected)
 	{
-		NumberFormat cf = new NumberFormatWrapper(4).getNumberFormat();
-		NumberFormat df = new NumberFormatWrapper(4).getNumberFormat();
-		String actual = path.toSvg(cf, df);
-		Assert.assertEquals(actual, expected);
+		Assert.assertEquals(path.toSvg(F, F), expected);
 	}
 }

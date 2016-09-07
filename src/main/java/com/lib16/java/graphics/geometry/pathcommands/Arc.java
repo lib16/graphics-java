@@ -1,10 +1,9 @@
 package com.lib16.java.graphics.geometry.pathcommands;
 
-import java.text.NumberFormat;
-
 import com.lib16.java.graphics.geometry.Angle;
 import com.lib16.java.graphics.geometry.Command;
 import com.lib16.java.graphics.geometry.Point;
+import com.lib16.java.utils.NumberFormatter;
 
 public final class Arc extends Command
 {
@@ -49,14 +48,14 @@ public final class Arc extends Command
 	}
 
 	@Override
-	public String toSvg(NumberFormat coordinateFormat, NumberFormat degreeFormat)
+	public String toSvg(NumberFormatter formatter, NumberFormatter degreeFormatter)
 	{
 		return (relative ? "a " : "A ")
-				+ coordinateFormat.format(rx) + " "
-				+ coordinateFormat.format(ry) + " "
-				+ (xAxisRotation == null ? "0" : xAxisRotation.toSvg(degreeFormat)) + " "
+				+ formatter.format(rx) + " "
+				+ formatter.format(ry) + " "
+				+ (xAxisRotation == null ? "0" : xAxisRotation.toSvg(degreeFormatter)) + " "
 				+ (largeArc ? "1 " : "0 ")
 				+ (sweep ? "1 " : "0 ")
-				+ points[0].toSvg(coordinateFormat);
+				+ points[0].toSvg(formatter);
 	}
 }

@@ -1,6 +1,5 @@
 package com.lib16.java.graphics.geometry;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 
 import com.lib16.java.arrays.Arrays;
@@ -14,6 +13,7 @@ import com.lib16.java.graphics.geometry.pathcommands.QuadraticCurveTo;
 import com.lib16.java.graphics.geometry.pathcommands.SmoothCubicCurveTo;
 import com.lib16.java.graphics.geometry.pathcommands.SmoothQuadraticCurveTo;
 import com.lib16.java.graphics.geometry.pathcommands.VerticalLineTo;
+import com.lib16.java.utils.NumberFormatter;
 
 public final class Path
 {
@@ -94,7 +94,7 @@ public final class Path
 	public Path rectangle(Point corner, double width, double height)
 	{
 		Point[] points = Points.rectangle(corner, width, height);
-		reorderPoints(ccw, points, 0);
+		reorderPoints(points, 0);
 		m(points[0]);
 		h(points[1].getX());
 		v(points[2].getY());
@@ -106,7 +106,7 @@ public final class Path
 	public Path roundedRectangle(Point corner, double width, double height, double radius)
 	{
 		Point[] points = Points.roundedRectangle(corner, width, height, radius);
-		reorderPoints(ccw, points, 0);
+		reorderPoints(points, 0);
 		m(points[0]);
 		a(radius, radius, null, false, !ccw, points[1]);
 		v(points[2].getY());
@@ -150,7 +150,7 @@ public final class Path
 	public Path star(Point center, int n, double... radii)
 	{
 		Point[] points = Points.star(center, n, radii);
-		reorderPoints(ccw, points, 1);
+		reorderPoints(points, 1);
 		polygon(points);
 		return this;
 	}
@@ -158,7 +158,7 @@ public final class Path
 	public Path sector(Point center, Angle start, Angle stop, double radius)
 	{
 		Point[] points = Points.sector(center, start, stop, radius);
-		reorderPoints(ccw, points, 1);
+		reorderPoints(points, 1);
 		m(points[0]);
 		l(points[1]);
 		a(radius, radius, null, largeArc(start, stop), !ccw, points[2]);
@@ -199,7 +199,7 @@ public final class Path
 		return commands;
 	}
 
-	public String toSvg(NumberFormat coordinateFormat, NumberFormat degreeFormat)
+	public String toSvg(NumberFormatter formatter, NumberFormatter degreeFormatter)
 	{
 		String string = "";
 		boolean first = true;
@@ -210,12 +210,17 @@ public final class Path
 			else {
 				first = false;
 			}
-			string += command.toSvg(coordinateFormat, degreeFormat);
+			string += command.toSvg(formatter, degreeFormatter);
 		}
 		return string;
 	}
 
-	private void reorderPoints(boolean ccw, Point[] points, int split)
+	public String toSvg()
+	{
+		return toSvg(NumberFormatter.DEFAULT_FORMATTER, NumberFormatter.DEFAULT_DEGREE_FORMATTER);
+	}
+
+	protected void reorderPoints(Point[] points, int split)
 	{
 		if (ccw) {
 			Arrays.reverse(points, split, points.length);

@@ -1,6 +1,6 @@
 package com.lib16.java.graphics.geometry;
 
-import java.text.NumberFormat;
+import com.lib16.java.utils.NumberFormatter;
 
 public abstract class Command
 {
@@ -24,5 +24,5 @@ public abstract class Command
 		return relative;
 	}
 
-	public abstract String toSvg(NumberFormat coordinateFormat, NumberFormat degreeFormat);
+	public abstract String toSvg(NumberFormatter formatter, NumberFormatter degreeFormatter);
 }

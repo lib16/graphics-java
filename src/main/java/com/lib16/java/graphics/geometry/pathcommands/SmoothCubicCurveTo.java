@@ -1,9 +1,8 @@
 package com.lib16.java.graphics.geometry.pathcommands;
 
-import java.text.NumberFormat;
-
 import com.lib16.java.graphics.geometry.Command;
 import com.lib16.java.graphics.geometry.Point;
+import com.lib16.java.utils.NumberFormatter;
 
 public final class SmoothCubicCurveTo extends Command
 {
@@ -13,10 +12,10 @@ public final class SmoothCubicCurveTo extends Command
 	}
 
 	@Override
-	public String toSvg(NumberFormat coordinateFormat, NumberFormat degreeFormat)
+	public String toSvg(NumberFormatter formatter, NumberFormatter degreeFormatter)
 	{
 		return (relative ? "s " : "S ")
-				+ points[0].toSvg(coordinateFormat) + " "
-				+ points[1].toSvg(coordinateFormat);
+				+ points[0].toSvg(formatter) + " "
+				+ points[1].toSvg(formatter);
 	}
 }

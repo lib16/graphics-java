@@ -1,6 +1,6 @@
 package com.lib16.java.graphics.geometry;
 
-import java.text.NumberFormat;
+import com.lib16.java.utils.NumberFormatter;
 
 public class Point
 {
@@ -29,9 +29,19 @@ public class Point
 		return this;
 	}
 
+	public Point rotate(Angle angle)
+	{
+		return rotate(ORIGIN, angle);
+	}
+
 	public Point scale(Point center, double factor)
 	{
 		return scaleX(center, factor).scaleY(center, factor);
+	}
+
+	public Point scale(double factor)
+	{
+		return scale(ORIGIN, factor);
 	}
 
 	public Point scaleX(Point center, double factor)
@@ -40,10 +50,20 @@ public class Point
 		return this;
 	}
 
+	public Point scaleX(double factor)
+	{
+		return scaleX(ORIGIN, factor);
+	}
+
 	public Point scaleY(Point center, double factor)
 	{
 		y = scaleVal(y, center.y, factor);
 		return this;
+	}
+
+	public Point scaleY(double factor)
+	{
+		return scaleY(ORIGIN, factor);
 	}
 
 	public Point skewX(Point center, Angle angle)
@@ -52,10 +72,20 @@ public class Point
 		return this;
 	}
 
+	public Point skewX(Angle angle)
+	{
+		return skewX(ORIGIN, angle);
+	}
+
 	public Point skewY(Point center, Angle angle)
 	{
 		y += angle.getTan() * (x - center.x);
 		return this;
+	}
+
+	public Point skewY(Angle angle)
+	{
+		return skewY(ORIGIN, angle);
 	}
 
 	public Point translate(double deltaX, double deltaY)
@@ -90,20 +120,13 @@ public class Point
 		return y;
 	}
 
-	/**
-	 * ???
-	 * @param value
-	 * @param offset
-	 * @param factor
-	 * @return
-	 */
-	public static double scaleVal(double value, double offset, double factor)
+	public String toSvg(NumberFormatter formatter)
 	{
-		return (value - offset) * factor + offset;
+		return formatter.format(x) + "," + formatter.format(y);
 	}
 
-	public String toSvg(NumberFormat numberFormat)
+	private static double scaleVal(double value, double offset, double factor)
 	{
-		return numberFormat.format(x) + "," + numberFormat.format(y);
+		return (value - offset) * factor + offset;
 	}
 }

@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.lib16</groupId>
 	<artifactId>graphics</artifactId>
-	<version>1.0</version>
+	<version>1.1</version>
 	<name>lib16 Graphics</name>
 	<description>Lib16 Graphics ...</description>
 	<url>http://lib16.com</url>
@@ -34,7 +34,7 @@
 		<dependency>
 			<groupId>com.lib16</groupId>
 			<artifactId>utils</artifactId>
-			<version>1.0</version>
+			<version>1.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.testng</groupId>
