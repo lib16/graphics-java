@@ -11,8 +11,12 @@ public class BezierPathTest
 	@DataProvider (name = "provider")
 	public static Object[][] provider()
 	{
-		Angle angle45 = Angle.byDegrees(45);
-		String sqrt2 = NumberFormatter.DEFAULT_FORMATTER.format(Math.sqrt(2) * 10);
+		final Angle a45 = Angle.byDegrees(45);
+		final String s2 = NumberFormatter.DEFAULT_FORMATTER.format(10 * Math.sqrt(2));
+		final String cp1 = NumberFormatter.DEFAULT_FORMATTER.format(
+				10 * BezierPath.QUADRANT_FACTOR);
+		final String cp2 = NumberFormatter.DEFAULT_FORMATTER.format(
+				40 + 10 * BezierPath.QUADRANT_FACTOR);
 
 		return new Object[][] {
 			// rectangle()
@@ -23,6 +27,64 @@ public class BezierPathTest
 			{
 				new BezierPath().ccw().rectangle(new Point(10, 20), 100, 80),
 				"M 10,100 L 110,100 L 110,20 L 10,20 Z"
+			},
+			// roundedRectangle()
+			{
+				new BezierPath().roundedRectangle(new Point(-50, -50), 100, 100, 10),
+				"M 40,-50"
+						+ " C " + cp2 + ",-50 50,-" + cp2 + " 50,-40"
+						+ " L 50,40"
+						+ " C 50," + cp2 + " " + cp2 + ",50 40,50"
+						+ " L -40,50"
+						+ " C -" + cp2 + ",50 -50," + cp2 + " -50,40"
+						+ " L -50,-40"
+						+ " C -50,-" + cp2 + " -" + cp2 + ",-50 -40,-50"
+						+ " Z"
+			},
+			{
+				new BezierPath().ccw().roundedRectangle(new Point(-50, -50), 100, 100, 10),
+				"M -40,-50"
+						+ " C -" + cp2 + ",-50 -50,-" + cp2 + " -50,-40"
+						+ " L -50,40"
+						+ " C -50," + cp2 + " -" + cp2 + ",50 -40,50"
+						+ " L 40,50"
+						+ " C " + cp2 + ",50 50," + cp2 + " 50,40"
+						+ " L 50,-40"
+						+ " C 50,-" + cp2 + " " + cp2 + ",-50 40,-50"
+						+ " Z"
+			},
+			// ellipse()
+			{
+				new BezierPath().ellipse(new Point(0, 0), 10, 10),
+				"M 0,-10"
+						+ " C " + cp1 + ",-10 10,-" + cp1 + " 10,0"
+						+ " C 10," + cp1 + " " + cp1 + ",10 0,10"
+						+ " C -" + cp1 + ",10 -10," + cp1 + " -10,0"
+						+ " C -10,-" + cp1 + " -" + cp1 + ",-10 0,-10"
+			},
+			{
+				new BezierPath().ccw().ellipse(new Point(0, 0), 10, 10),
+				"M 0,-10"
+						+ " C -" + cp1 + ",-10 -10,-" + cp1 + " -10,0"
+						+ " C -10," + cp1 + " -" + cp1 + ",10 0,10"
+						+ " C " + cp1 + ",10 10," + cp1 + " 10,0"
+						+ " C 10,-" + cp1 + " " + cp1 + ",-10 0,-10"
+			},
+			{
+				new BezierPath().circle(new Point(0, 0), 10),
+				"M 0,-10"
+						+ " C " + cp1 + ",-10 10,-" + cp1 + " 10,0"
+						+ " C 10," + cp1 + " " + cp1 + ",10 0,10"
+						+ " C -" + cp1 + ",10 -10," + cp1 + " -10,0"
+						+ " C -10,-" + cp1 + " -" + cp1 + ",-10 0,-10"
+			},
+			{
+				new BezierPath().ccw().circle(new Point(0, 0), 10),
+				"M 0,-10"
+						+ " C -" + cp1 + ",-10 -10,-" + cp1 + " -10,0"
+						+ " C -10," + cp1 + " -" + cp1 + ",10 0,10"
+						+ " C " + cp1 + ",10 10," + cp1 + " 10,0"
+						+ " C 10,-" + cp1 + " " + cp1 + ",-10 0,-10"
 			},
 			// star
 			{
@@ -51,8 +113,8 @@ public class BezierPathTest
 			},
 			// Transformations
 			{
-				new BezierPath().rectangle(new Point(-10, -10), 20, 20).rotate(angle45),
-				"M 0,-" + sqrt2 + " L " + sqrt2 + ",0 L 0," + sqrt2 + " L -" + sqrt2 + ",0 Z"
+				new BezierPath().rectangle(new Point(-10, -10), 20, 20).rotate(a45),
+				"M 0,-" + s2 + " L " + s2 + ",0 L 0," + s2 + " L -" + s2 + ",0 Z"
 			},
 			{
 				new BezierPath().rectangle(new Point(-10, -10), 20, 20).scale(2),
@@ -67,11 +129,11 @@ public class BezierPathTest
 				"M -10,10 L 10,10 L 10,-10 L -10,-10 Z"
 			},
 			{
-				new BezierPath().rectangle(new Point(-10, -10), 20, 20).skewX(angle45),
+				new BezierPath().rectangle(new Point(-10, -10), 20, 20).skewX(a45),
 				"M -20,-10 L 0,-10 L 20,10 L 0,10 Z"
 			},
 			{
-				new BezierPath().rectangle(new Point(-10, -10), 20, 20).skewY(angle45),
+				new BezierPath().rectangle(new Point(-10, -10), 20, 20).skewY(a45),
 				"M -10,-20 L 10,0 L 10,20 L -10,0 Z"
 			},
 			{

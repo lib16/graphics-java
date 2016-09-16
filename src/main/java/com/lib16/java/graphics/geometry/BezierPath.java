@@ -4,6 +4,8 @@ import com.lib16.java.utils.NumberFormatter;
 
 public class BezierPath
 {
+	public static final double QUADRANT_FACTOR = 0.5522847498;
+
 	private Path path = new Path();
 
 	public BezierPath m(Point point)
@@ -62,6 +64,33 @@ public class BezierPath
 		return this;
 	}
 
+	public BezierPath roundedRectangle(Point corner, double width, double height, double radius)
+	{
+		double delta = radius * QUADRANT_FACTOR;
+		Point[] rect = Points.roundedRectangle(corner, width, height, radius);
+		Point[] points = {
+			rect[0],
+			rect[0].copy().translateX(+delta), rect[1].copy().translateY(-delta), rect[1],
+			rect[2],
+			rect[2].copy().translateY(+delta), rect[3].copy().translateX(+delta), rect[3],
+			rect[4],
+			rect[4].copy().translateX(-delta), rect[5].copy().translateY(+delta), rect[5],
+			rect[6],
+			rect[6].copy().translateY(-delta), rect[7].copy().translateX(-delta), rect[7],
+		};
+		path.reorderPoints(points, 0);
+		m(points[0]);
+		c(points[1], points[2], points[3]);
+		l(points[4]);
+		c(points[5], points[6], points[7]);
+		l(points[8]);
+		c(points[9], points[10], points[11]);
+		l(points[12]);
+		c(points[13], points[14], points[15]);
+		z();
+		return this;
+	}
+
 	/**
 	 * Adds path commands for a regular (star) polygon.
 	 *
@@ -70,6 +99,32 @@ public class BezierPath
 	public BezierPath star(Point center, int n, double... radii)
 	{
 		path.star(center, n, radii);
+		return this;
+	}
+
+	public BezierPath circle(Point center, double radius)
+	{
+		return ellipse(center, radius, radius);
+	}
+
+	public BezierPath ellipse(Point center, double rx, double ry)
+	{
+		double dx = rx * QUADRANT_FACTOR;
+		double dy = ry * QUADRANT_FACTOR;
+		Point[] cross = Points.cross(center, rx, ry);
+		Point[] points = new Point[] {
+				cross[0].copy(),
+				center.copy().translate( dx, -ry), center.copy().translate( rx, -dy), cross[1],
+				center.copy().translate( rx,  dy), center.copy().translate( dx,  ry), cross[2],
+				center.copy().translate(-dx,  ry), center.copy().translate(-rx,  dy), cross[3],
+				center.copy().translate(-rx, -dy), center.copy().translate(-dx, -ry), cross[0]
+		};
+		path.reorderPoints(points, 0);
+		m(points[0]);
+		c(points[1], points[2], points[3]);
+		c(points[4], points[5], points[6]);
+		c(points[7], points[8], points[9]);
+		c(points[10], points[11], points[12]);
 		return this;
 	}
 

@@ -81,6 +81,16 @@ public class Points
 		return points;
 	}
 
+	public static Point[] cross(Point center, double rx, double ry)
+	{
+		Point[] points = new Point[4];
+		points[0] = center.copy().translateY(-ry);
+		points[1] = center.copy().translateX(rx);
+		points[2] = center.copy().translateY(ry);
+		points[3] = center.copy().translateX(-rx);
+		return points;
+	}
+
 	public static void rotate(Point center, Angle angle, Point[]... points)
 	{
 		for (Point[] pointArray: points) {
